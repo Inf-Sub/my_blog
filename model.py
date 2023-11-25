@@ -1,46 +1,57 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-
 from sqlalchemy import (
     Integer,
     String,
-    ForeignKey
+    ForeignKey,
+    Table,
+    Column
 )
 
-from sqlalchemy.orm import DeclarativeBase, mapped_column, relationship 
+from sqlalchemy.orm import (
+    DeclarativeBase,
+    mapped_column,
+    relationship,
+)
 from config import engine
 
 class Base(DeclarativeBase):
     pass
 
-db = SQLAlchemy(model_class=Base)
 
-app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///blog.db"
-db.init_app(app)
-
-
-class User(db.Model):
+class User(Base):
+    __tablename__ = 'user'
     id = mapped_column(Integer, primary_key=True, autoincrement=True)
-    username = mapped_column(String, unique=True, nullable=False)
+    username = mapped_column(String, nullable=False)
     email = mapped_column(String, nullable=False)
 
 
-class Post(db.Model):
+post_tag_table = Table(
+    'post_tag_table',
+    Base.metadata,
+    Column('post_id', ForeignKey('post.id')),
+    Column('tag_id', ForeignKey('tag.id'))
+)
+
+
+class Post(Base):
+    __tablename__ = 'post'
     id = mapped_column(Integer, primary_key=True, autoincrement=True)
     title = mapped_column(String, nullable=False)
     content = mapped_column(String, nullable=False)
-    user = mapped_column(Integer, ForeignKey(User.id), nullable=False)
-    tags = relationship('Tag', back_populates='post')
+    user = mapped_column(Integer, ForeignKey('user.id', onupdate='CASCADE', ondelete='CASCADE'), nullable=False)
+    tags = relationship("Tag",secondary=post_tag_table, backref='posts')
 
 
-class Tag(db.Model):
+class Tag(Base):
+    __tablename__ = 'tag'
     id = mapped_column(Integer, primary_key=True, autoincrement=True)
     title = mapped_column(String, nullable=False)
-    post_id = mapped_column(ForeignKey(Post.id))
-    post = relationship('Post', back_populates='tags')
+    name = mapped_column(String, nullable=False)
 
 
-with app.app_context():
-    db.create_all()
-    # db.drop_all()
+def main():
+    # Base.metadata.create_all(bind=engine)
+    Base.metadata.drop_all(bind=engine)
+
+
+if __name__ == "__main__":
+    main()
