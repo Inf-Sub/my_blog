@@ -1,4 +1,5 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, query
+from sqlalchemy import select
 
 from model import User, Post, Tag
 
@@ -24,7 +25,8 @@ def create_post_with_tags(session: Session, post: Post, *tags) -> None:
     session.add(post)
     session.commit()
 
-def main():
+
+def first_db_init() -> None:
     with Session(engine) as session:
 
         # creating and commiting users
@@ -104,6 +106,27 @@ def main():
         create_post_with_tags(session, post9, tag4)
         create_post_with_tags(session, post10, tag4)
 
+
+def main():
+    session = Session(engine)
+
+    # result = session.scalars(select(Post).where(Post.user==1)).all()
+    # print(len(result))
+
+    # result = session.scalars(select(User)).all()
+    # print(result)
+
+    # result = session.scalars(select(User)).all()
+    # for item in result:
+    #     print(item.username)
+    
+    # result = session.query(Post).all()  # list of posts
+    # result = session.query(Post).where(Post.tags.tag.title == 'genres history')
+
+    result = session.scalars(select(Post).where(Post.tags.any(title = 'genres history'))).all()
+    # print(result.scalar())
+
+    session.close()
 
 if __name__ == '__main__':
     main()

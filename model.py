@@ -13,7 +13,7 @@ from sqlalchemy.orm import (
 )
 from config import engine
 
-class Base(DeclarativeBase):
+class Base(DeclarativeBase): 
     pass
 
 
@@ -22,6 +22,9 @@ class User(Base):
     id = mapped_column(Integer, primary_key=True, autoincrement=True)
     username = mapped_column(String, nullable=False)
     email = mapped_column(String, nullable=False)
+
+    def __repr__(self) -> str:
+        return f'{self.username} {self.email}'
 
 
 post_tag_table = Table(
@@ -40,12 +43,18 @@ class Post(Base):
     user = mapped_column(Integer, ForeignKey('user.id', onupdate='CASCADE', ondelete='CASCADE'), nullable=False)
     tags = relationship("Tag",secondary=post_tag_table, backref='posts')
 
+    def __repr__(self) -> str:
+        return f'Title: {self.title}, content: {self.content}'
+
 
 class Tag(Base):
     __tablename__ = 'tag'
     id = mapped_column(Integer, primary_key=True, autoincrement=True)
     title = mapped_column(String, nullable=False)
     name = mapped_column(String, nullable=False)
+
+    def __repr__(self) -> str:
+        return f'{self.title}'
 
 
 def main():
