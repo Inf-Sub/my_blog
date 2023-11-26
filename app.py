@@ -108,7 +108,7 @@ def first_db_init() -> None:
 
 
 def main():
-    session = Session(engine)
+    # session = Session(engine)
 
     # result = session.scalars(select(Post).where(Post.user==1)).all()
     # print(len(result))
@@ -123,10 +123,11 @@ def main():
     # result = session.query(Post).all()  # list of posts
     # result = session.query(Post).where(Post.tags.tag.title == 'genres history')
 
-    result = session.scalars(select(Post).where(Post.tags.any(title = 'genres history'))).all()
+    # result = session.scalars(select(Post).where(Post.tags.any(title = 'genres history'))).all()
     # print(result.scalar())
 
-    session.close()
+    # session.close()
+    pass
 
 if __name__ == '__main__':
     main()

@@ -1,6 +1,6 @@
 from sqlalchemy import select
 
-from model import User, Post, Tag
+from model import User, Post
 
 def test_post_amount(db_session):
     result = db_session.scalars(select(Post).where(Post.user==1)).all()
@@ -26,4 +26,8 @@ def test_posts_with_tag(db_session):
 def test_posts_with_tag2(db_session):
     statement = select(Post).where(Post.tags.any(title = 'genres history'))
     result = db_session.scalars(statement).all()
-    # assert len(result) == 4
+    assert result[0].title == 'Истоки джаза'
+    assert result[1].title == 'О NWOBHM'
+    assert result[2].title == 'Как появился панк рок'
+    assert result[3].title == 'Как появился хард рок'
+    
