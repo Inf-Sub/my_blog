@@ -16,16 +16,21 @@ from pytest import fixture
 
 # import ../config
 
-from . import config
+import config
 
-print(config)
+print(config.engine)
+
+# or
+# from config import engine
+# print(engine)
+
 
 # @fixture()
 # def db_session():
 #     with Session(config.engine) as session:
 #         yield session
-
-    # session = Session(engine)
-    # yield session
-    # session.close()
+#
+#     session = Session(engine)
+#     yield session
+#     session.close()
     

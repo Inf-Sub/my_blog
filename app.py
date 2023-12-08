@@ -4,6 +4,7 @@ from models.model import User, Post, Tag
 
 from config import engine
 
+
 def create_user(session: Session, username: str, email: str) -> User:
     user = User(username=username, 
                 email=email)
@@ -57,40 +58,40 @@ def first_db_init() -> None:
                      user=user1.id)
         
         post2 = Post(title='Почему у гитары шесть струн?',
-                    content='Почему у гитары шесть струнПочему у гитары шесть струн',
-                    user=user1.id)
+                     content='Почему у гитары шесть струнПочему у гитары шесть струн',
+                     user=user1.id)
         
         post3 = Post(title='Сколько нот на самом деле?',
-                    content='Сколько нот на самом делеСколько нот на самом деле',
-                    user=user2.id)
+                     content='Сколько нот на самом делеСколько нот на самом деле',
+                     user=user2.id)
         
         post4 = Post(title='О NWOBHM',
-                    content='О NWOBHMО NWOBHMО NWOBHM',
-                    user=user2.id)
+                     content='О NWOBHMО NWOBHMО NWOBHM',
+                     user=user2.id)
         
         post5 = Post(title='Как появился панк рок',
-                    content='Как появился панк рокКак появился панк рок',
-                    user=user3.id)
+                     content='Как появился панк рокКак появился панк рок',
+                     user=user3.id)
         
         post6 = Post(title='Как появился хард рок',
-                    content='Как появился хард рокКак появился хард рок',
-                    user=user3.id)
+                     content='Как появился хард рокКак появился хард рок',
+                     user=user3.id)
 
         post7 = Post(title='Классические рок баллады',
-                    content='Классические рок балладыКлассические рок баллады',
-                    user=user4.id)
+                     content='Классические рок балладыКлассические рок баллады',
+                     user=user4.id)
         
         post8 = Post(title='Подробно об музыкальных интервалах',
-                    content='Подробно об музыкальных интервалах',
-                    user=user4.id)
+                     content='Подробно об музыкальных интервалах',
+                     user=user4.id)
         
         post9 = Post(title='Кварто-квинтовый круг для чайников',
-                    content='Кварто-квинтовый круг для чайников',
-                    user=user5.id)
+                     content='Кварто-квинтовый круг для чайников',
+                     user=user5.id)
         
         post10 = Post(title='Основы теории музыки',
-                    content='Основы теории музыкиОсновы теории музыки',
-                    user=user5.id)
+                     content='Основы теории музыкиОсновы теории музыки',
+                     user=user5.id)
 
         # commiting posts with tags
 
@@ -127,6 +128,7 @@ def main():
 
     # session.close()
     pass
+
 
 if __name__ == '__main__':
     main()
