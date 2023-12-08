@@ -1,6 +1,6 @@
 from sqlalchemy import select
 
-from model import User, Post
+from models import User, Post
 
 def test_post_amount(db_session):
     result = db_session.scalars(select(Post).where(Post.user==1)).all()

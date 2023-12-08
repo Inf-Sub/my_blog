@@ -1,7 +1,6 @@
-from sqlalchemy.orm import Session, query
-from sqlalchemy import select
+from sqlalchemy.orm import Session
 
-from model import User, Post, Tag
+from models.model import User, Post, Tag
 
 from config import engine
 
