@@ -3,3 +3,4 @@ init.sh
 __pycache__
 .idea/
 .pytest_cache/
+TODO.md
